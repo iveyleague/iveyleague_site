@@ -1,60 +1,121 @@
-const nav = document.querySelector("nav");
-const navLinks = document.querySelectorAll(".nav-links li");
-const menu = document.querySelector("#menu");
+// script.js
 
-document.body.addEventListener("click", (e) => {
-  if (!menu.contains(e.target) & !nav.contains(e.target)) {
-    nav.classList.remove("active");
-    menu.classList.remove("active");
-  } else if (menu.contains(e.target)) {
+// ==================== EASING FUNCTIONS ====================
+
+const easeOutQuad = (t) => t * (2 - t);
+const easeOutCubic = (t) => --t * t * t + 1;
+const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+// ==================== NAVIGATION ====================
+
+const nav = document.querySelector("nav");
+const menu = document.querySelector("#menu");
+const navLinks = document.querySelectorAll(".nav-links li a");
+
+function toggleMenu() {
+    const isOpen = nav.classList.contains("active");
     nav.classList.toggle("active");
     menu.classList.toggle("active");
-  }
+    menu.setAttribute("aria-expanded", String(!isOpen));
+}
+
+menu.addEventListener("click", toggleMenu);
+
+document.addEventListener("click", (e) => {
+    if (!menu.contains(e.target) && !nav.contains(e.target)) {
+        nav.classList.remove("active");
+        menu.classList.remove("active");
+        menu.setAttribute("aria-expanded", "false");
+    }
 });
 
-navLinks.forEach((link) => link.addEventListener("click", addActiveClass));
+navLinks.forEach(link => {
+    link.addEventListener("click", () => {
+        nav.classList.remove("active");
+        menu.classList.remove("active");
+        menu.setAttribute("aria-expanded", "false");
+    });
+});
 
-function addActiveClass() {
-  navLinks.forEach((link) => link.classList.remove("active"));
-  this.classList.add("active");
+// Active nav link
+function setActiveLink() {
+    navLinks.forEach(link => link.parentElement.classList.remove("active"));
+    
+    const current = Array.from(navLinks).find(link => {
+        const section = document.querySelector(link.getAttribute("href"));
+        if (section) {
+            const rect = section.getBoundingClientRect();
+            return rect.top <= 180 && rect.bottom >= 180;
+        }
+        return false;
+    });
+
+    if (current) current.parentElement.classList.add("active");
 }
 
-// animation for vertical line 📏 & circles ⚪
+// ==================== SMOOTH SCROLL ANIMATION ====================
+
 const verticalLine = document.querySelector(".vertical");
 const circles = document.querySelectorAll(".circle");
-const horizontalLines = document.querySelectorAll(".horizontal");
-const startingPoint = document.querySelector("#home").offsetHeight / 2;
+const horizontalLines = document.querySelectorAll(".strip-line.horizontal");
 
 let activeIndex = 0;
-
-/// **  Description **
-/**
- * animation will start at height/2 of the Home page.
- * when scrollAmount >= height of a feature card
- * we want to increment active Index and
- * then animate vertical line and the circles.
- */
+let targetIndex = 0;
+let currentHeight = 0;        // For smooth line animation
+let ticking = false;
 
 function scrollEffect() {
-  const scrollAmt = scrollY - startingPoint;
+    const scrollY = window.scrollY;
+    const startingPoint = document.getElementById("home").offsetHeight * 0.6;
+    const featureHeight = document.querySelector(".feature")?.offsetHeight || 600;
 
-  if (scrollAmt < 0) {
-    activeIndex = 0;
-    circles.forEach((circle) => circle.classList.remove("active"));
-    horizontalLines.forEach((circle) => circle.classList.remove("active"));
-    verticalLine.style.height = 0;
-    return;
-  }
+    if (scrollY < startingPoint) {
+        targetIndex = 0;
+    } else {
+        const progress = (scrollY - startingPoint) / featureHeight;
+        targetIndex = Math.min(Math.floor(progress) + 1, circles.length);
+    }
 
-  const amtToScroll =
-    document.querySelector(".feature").offsetHeight * (activeIndex + 1);
+    // Smoothly animate towards target
+    if (targetIndex !== activeIndex) {
+        activeIndex = targetIndex;
 
-  if (scrollAmt >= amtToScroll) {
-    activeIndex = Math.min(activeIndex + 1, circles.length);
-    verticalLine.style.height = `${(activeIndex * 100) / circles.length}%`;
-    circles[activeIndex - 1].classList.add("active");
-    horizontalLines[activeIndex - 1].classList.add("active");
-  }
+        // Activate circles and horizontal lines immediately (they look better snapped)
+        circles.forEach((circle, i) => {
+            circle.classList.toggle("active", i < activeIndex);
+        });
+        horizontalLines.forEach((line, i) => {
+            line.classList.toggle("active", i < activeIndex);
+        });
+    }
+
+    // Smooth eased height for vertical line
+    const targetHeight = (activeIndex / circles.length) * 100;
+    currentHeight += (targetHeight - currentHeight) * 0.15; // Ease factor
+
+    if (verticalLine) {
+        verticalLine.style.height = `${currentHeight}%`;
+    }
 }
 
-window.onscroll = scrollEffect;
+// Throttled scroll with requestAnimationFrame
+function throttledScroll() {
+    if (!ticking) {
+        requestAnimationFrame(() => {
+            scrollEffect();
+            ticking = false;
+        });
+        ticking = true;
+    }
+}
+
+window.addEventListener("scroll", throttledScroll, { passive: true });
+
+// Initialize
+document.addEventListener("DOMContentLoaded", () => {
+    setActiveLink();
+    scrollEffect(); // Initial call
+});
+
+// Optional: Update active link on scroll
+window.addEventListener("scroll", setActiveLink);
