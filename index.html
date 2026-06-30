@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <title>Green Nature | Where Beauty Meets Existence</title>
-    <meta name="description" content="Discover the beauty and wonder of nature with Green Nature.">
+    <title>Ivey | Where Beauty Meets Existence</title>
+    <meta name="description" content="Discover the beauty and wonder of nature with Ivey.">
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="https://images.pexels.com/photos/35196/water-plant-green-fine-layers.jpg" type="image/x-icon">
@@ -25,7 +25,7 @@
         <div class="container header-section">
             <!-- Logo -->
             <div class="logo">
-                <a href="#" aria-label="Green Nature Home">GreeN</a>
+                <a href="#" aria-label="Ivey Home">Ivey</a>
             </div>
 
             <!-- Mobile Menu Toggle -->
@@ -56,7 +56,7 @@
     <section id="home">
         <div class="container hero-section">
             <div class="hero-contents">
-                <h1 class="hero-text">Welcome to Green Nature.</h1>
+                <h1 class="hero-text">Welcome to Ivey.</h1>
                 <p class="hero-subText">Where beauty meets existence.</p>
                 <a href="#features" class="cta button">
                     Explore Now
@@ -74,4 +74,122 @@
 
             <!-- Social Links -->
             <div class="social-links">
-                <a href="https://github.com/nath-Nipan-2022" target="_blank" aria-label="GitHub
+                <a href="https://github.com/nath-Nipan-2022" target="_blank" aria-label="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/nipan-debnath-742025248" target="_blank" aria-label="LinkedIn">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+                <a href="https://twitter.com/nipandebnth?s=09" target="_blank" aria-label="Twitter">
+                    <i class="fa-brands fa-twitter"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <div class="container features-section">
+            <h2 class="features_heading">Features of Nature 🌴</h2>
+
+            <div class="features flex-group">
+                <!-- Feature 1 -->
+                <div class="feature feature-one flex-group">
+                    <div class="image-section">
+                        <img src="https://images.unsplash.com/photo-1455659817273-f96807779a8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
+                             alt="Vibrant yellow sunflowers in full bloom"
+                             loading="lazy"
+                             width="800"
+                             height="600">
+                    </div>
+                    <article class="text-section">
+                        <h3 class="title">Sunflower Spectacle</h3>
+                        <p class="description">
+                            Among all kinds of flowers, Sunflower is one of the brightest and most well-structured. 
+                            It always attracts us! 😊
+                        </p>
+                        <a href="#" class="button more-btn">Know More</a>
+                    </article>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature feature-two flex-group">
+                    <article class="text-section">
+                        <h3 class="title">Snow Falls Wonderland</h3>
+                        <p class="description">
+                            The smooth surface and magical beauty of snowfalls make you want to run out and play! ❄️
+                        </p>
+                        <a href="#" class="button more-btn">Know More</a>
+                    </article>
+                    <div class="image-section">
+                        <img src="https://images.unsplash.com/photo-1518984211165-a6c9abed630f?ixlib=rb-4.0.3&auto=format&fit=crop&w=867&q=80"
+                             alt="Peaceful snowy landscape with falling snow"
+                             loading="lazy"
+                             width="800"
+                             height="600">
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature feature-three flex-group">
+                    <div class="image-section">
+                        <img src="https://images.unsplash.com/photo-1579304113495-203391042ddc?ixlib=rb-4.0.3&auto=format&fit=crop&w=726&q=80"
+                             alt="Mystical toadstools growing in forest"
+                             loading="lazy"
+                             width="800"
+                             height="600">
+                    </div>
+                    <article class="text-section">
+                        <h3 class="title">Toadstools</h3>
+                        <p class="description">
+                            From vibrant caps to hidden mysteries, toadstools invite you to explore the mystical side of the plant kingdom! 🍄
+                        </p>
+                        <a href="#" class="button more-btn">Know More</a>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container about-section">
+            <h2>Who We Are</h2>
+            <p>
+                Ivey is a collective of nature enthusiasts, environmentalists, 
+                and creatives who share a common passion for showcasing the splendor of our planet. 
+                Whether you're a seasoned nature lover or just starting to appreciate the beauty around you, 
+                Ivey welcomes you with open arms.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-section">
+            <ul class="footer-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="https://github.com/nath-Nipan-2022" target="_blank">Contact Us</a></li>
+            </ul>
+            
+            <div class="footer-logo">
+                <span>Ivey</span>
+            </div>
+
+            <!-- Dynamic Copyright -->
+            <p class="copy-write">&copy; <span id="year"></span> Ivey. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="./observer.js"></script>
+    
+    <script>
+        // Dynamic Year
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
